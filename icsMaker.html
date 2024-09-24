@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Erweiterte Terminverwaltung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-container, .appointments-container {
+            flex: 1;
+            margin: 10px;
+        }
+        label, input, select, textarea, button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            width: auto;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+        .time-input-container {
+            display: flex;
+            margin-top: 10px;
+        }
+        .time-input-container input, .time-input-container select {
+            flex: 1;
+        }
+		.appointment-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 5px 0;
+		}
+		.appointment-item p {
+			margin: 0;
+			flex-grow: 1;
+		}
+		.appointment-item button {
+			margin-left: 20px;
+			padding: 0 0;
+			margin-top: 0;
+		}
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Termindetails festlegen</h2>
+        <form id="appointmentForm">
+            <label for="title">Titel:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="duration">Dauer (Minuten):</label>
+            <input type="number" id="duration" name="duration" required min="1" max="720">
+
+            <label for="location">Ort (optional):</label>
+            <input type="text" id="location" name="location">
+
+            <label for="description">Beschreibung (optional):</label>
+            <textarea id="description" name="description"></textarea>
+
+            <label for="url">URL (optional):</label>
+            <input type="url" id="url" name="url">
+
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="TENTATIVE">Vorläufig</option>
+                <option value="CONFIRMED">Bestätigt</option>
+            </select>
+        </form>
+    </div>
+    
+    <div class="appointments-container">
+        <h3>Termine hinzufügen</h3>
+        <label for="date">Datum:</label>
+        <input type="date" id="date" name="date" required>
+
+        <div class="time-input-container">
+            <input type="time" id="time" name="time">
+            <select id="timeSelect" onchange="syncTimeInput()">
+                <option value="">--Wähle eine Zeit--</option>
+				<option value="08:00">08:00</option>
+				<option value="08:30">08:30</option>
+				<option value="09:00">09:00</option>
+				<option value="09:30">09:30</option>
+				<option value="10:00">10:00</option>
+				<option value="10:30">10:30</option>
+				<option value="11:00">11:00</option>
+				<option value="11:30">11:30</option>
+				<option value="12:00">12:00</option>
+				<option value="12:30">12:30</option>
+				<option value="13:00">13:00</option>
+				<option value="13:30">13:30</option>
+				<option value="14:00">14:00</option>
+				<option value="14:30">14:30</option>
+				<option value="15:00">15:00</option>
+				<option value="15:30">15:30</option>
+				<option value="16:00">16:00</option>
+				<option value="16:30">16:30</option>
+				<option value="17:00">17:00</option>
+				<option value="17:30">17:30</option>
+				<option value="18:00">18:00</option>
+            </select>
+        </div>
+
+        <button type="button" onclick="addAppointment()">Termin hinzufügen</button>
+
+        <div id="appointmentsList">
+            <h4>Hinzugefügte Termine:</h4>
+        </div>
+		
+		<button type="button" onclick="copyAppointmentsToClipboard()">Termine in Zwischenablage kopieren</button>
+		<button type="button" onclick="exportAppointments()">Termine als ics exportieren</button>
+
+		
+    </div>
+
+    <script src="appointment.js"></script>
+</body>
+</html>
