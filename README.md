@@ -9,6 +9,7 @@ icsMaker-html is a simple web-based tool that helps you create ICS files for sch
 
 ## Usage
 go to https://cbittner.github.io/icsMaker-html/
+
     Enter event details.
     Add date options.
     Generate and download the .ics file.
