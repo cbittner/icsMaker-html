@@ -7,16 +7,8 @@ icsMaker-html is a simple web-based tool that helps you create ICS files for sch
 - Generate .ics files for calendar integration (e.g., Google Calendar, Outlook)
 - Lightweight and easy to use
 
-## Installation
-Clone the repository:
-```bash
-git clone https://github.com/cbittner/icsMaker-html.git
-```
-
-Open icsMaker.html in your browser.
-
 ## Usage
-
+go to https://cbittner.github.io/icsMaker-html/
     Enter event details.
     Add date options.
     Generate and download the .ics file.
