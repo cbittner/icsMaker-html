@@ -20,7 +20,6 @@ function syncTimeInput() {
     timeInput.value = timeSelect.value;
 }
 
-
 // Funktion zum Aktualisieren der Liste der hinzugefügten Termine
 function updateAppointmentsList() {
     const appointmentsList = document.getElementById('appointmentsList');
@@ -33,7 +32,6 @@ function updateAppointmentsList() {
         appointmentsList.appendChild(appointmentElement);
     });
 }
-
 
 // Funktion zum Formatieren des Datums und der Uhrzeit
 function formatDate(date, time) {
@@ -113,21 +111,37 @@ function exportAppointments() {
 
     icsContent.push('END:VCALENDAR');
     
-    downloadICS(icsContent.join('\r\n'));
+    const sanitizedTitle = sanitizeFilename(title) || 'appointments';
+    downloadICS(icsContent.join('\r\n'), `${sanitizedTitle}.ics`);
 }
 
+// Datum für iCalendar formatieren
 function formatDateForICS(date) {
     const pad = num => String(num).padStart(2, '0');
     return `${date.getUTCFullYear()}${pad(date.getUTCMonth() + 1)}${pad(date.getUTCDate())}T${pad(date.getUTCHours())}${pad(date.getUTCMinutes())}${pad(date.getUTCSeconds())}Z`;
 }
 
-function downloadICS(content) {
+// Sanitizes a filename: removes illegal characters and replaces spaces with underscores.
+function sanitizeFilename(name) {
+    if (!name) return '';
+    // Replace spaces with underscores
+    let sanitized = name.replace(/\s+/g, '_');
+    // Remove characters not allowed in Windows filenames: \ / : * ? " < > |
+    sanitized = sanitized.replace(/[\\/:*?"<>|]/g, '');
+    // Strip control characters
+    sanitized = sanitized.replace(/[\x00-\x1F\x7F]/g, '');
+    // Trim leading/trailing underscores or dots
+    sanitized = sanitized.replace(/^[_\.]+|[_\.]+$/g, '');
+    return sanitized;
+}
+
+// Download der .ics‑Datei
+function downloadICS(content, filename = 'appointments.ics') {
     const blob = new Blob([content], {type: 'text/calendar;charset=utf-8'});
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'appointments.ics';
+    link.download = filename;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
-
